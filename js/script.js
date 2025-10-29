@@ -1,11 +1,6 @@
-// ===== TYPING ANIMATION =====
-const typed = new Typed('.typedText', {
-    strings: ['SOMNATH','Turning problems into tech solutions'],
-    typeSpeed: 100,
-    backSpeed: 80,
-    backDelay: 2000,
-    loop: true
-});
+// ===== REMOVED TYPING ANIMATION - Static text now =====
+// The typing animation code has been removed
+// Update your HTML to show: <p>I'm <span class="typedText">SOMNATH</span></p>
 
 // ===== MOUSE CURSOR EMOJI =====
 document.addEventListener('mousemove', (e) => {
@@ -328,7 +323,7 @@ function setupCertificationsSlider() {
     
     let currentSlide = 0;
     let autoSlideInterval;
-    const autoSlideDelay = 5000;
+    const autoSlideDelay = 9000; // Changed from 5000ms (5 seconds) to 8000ms (8 seconds)
     
     function goToSlide(index) {
         currentSlide = index;
