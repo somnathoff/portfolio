@@ -256,31 +256,31 @@ function setupCertificationsSlider() {
     
     const certifications = [
         {
-            title: "23rd ISTE Adhiyamaan College of Engineering",
+            title: "23rd ISTE ",
             image: "https://iili.io/KPSKu6J.jpg"
         },
         {
-            title: "ASTHRA 2K24 KSR College of Engineering",
+            title: "ASTHRA 2K24",
             image: "https://iili.io/KPS2cu9.jpg"
         },
         {
-            title: "Business Plan Competition Mahendra Institute of Technology",
+            title: "Business Plan",
             image: "https://iili.io/KPSCKV1.jpg"
         },
         {
-            title: "State Level Coding Hackathon’25 Velammal College of Engineering and Technology",
+            title: "State Level Coding Hackathon",
             image: "https://iili.io/KPSxmXV.jpg"
         },
         {
-            title: "Diagnosis for Diabetic Retinopathy using Quick Convolutional Diagnosis",
+            title: "ICAMT 2024",
             image: "https://iili.io/KP8yLJ9.jpg"
         },
         {
-            title: "Mastering Figma Beginner to Expert UI/UX Design GUVI",
+            title: "Expert UI/UX",
             image: "https://iili.io/KPSYcgV.jpg"
         },
         {
-            title: "LOYONOVATE 2K25 Loyola College of Arts & Science",
+            title: "LOYONOVATE 2K25",
             image: "https://iili.io/KPS0LMu.jpg"
         },
         {
