@@ -251,6 +251,10 @@ function setupCertificationsSlider() {
     
     const certifications = [
         {
+            title:"Innovation Council Ambassador",
+            image:"https://iili.io/KiE3f3X.jpg"
+        },
+        {
             title: "23rd ISTE ",
             image: "https://iili.io/KPSKu6J.jpg"
         },
