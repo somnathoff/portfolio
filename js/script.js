@@ -563,7 +563,7 @@ function setupChatBot() {
     // Chat responses database
     const responses = {
         intro: {
-            text: `Hello there! 👋<br><br>I'm <strong>Somnath</strong>, a Computer Science Engineering student passionate about technology and innovation.<br><br>I love building solutions that solve real-world problems!<br><br>Type <strong>'help'</strong> to see what you can ask me about.`,
+            text: `Hello there! 👋<br><br>I'm <strong>Somnath</strong>, a Computer Science Engineering student passionate about technology and innovation.<br><br>I love building solutions that solve real world problems!<br><br>Type <strong>'help'</strong> to see what you can ask me about.`,
             delay: 1500
         },
         help: {
@@ -605,7 +605,7 @@ function setupChatBot() {
                 {
                     type: 'project',
                     title: 'AI-Powered Web App',
-                    description: 'Built a full-stack web application with machine learning integration',
+                    description: 'Built a full stack web application with machine learning integration',
                     tags: ['Python', 'Django', 'TensorFlow', 'PostgreSQL']
                 },
                 {
@@ -617,7 +617,7 @@ function setupChatBot() {
                 {
                     type: 'project',
                     title: 'Mobile Application',
-                    description: 'Cross-platform mobile app with real-time features',
+                    description: 'Cross platform mobile app with real time features',
                     tags: ['React Native', 'Firebase', 'Node.js']
                 }
             ]
