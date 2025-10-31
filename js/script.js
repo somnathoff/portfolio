@@ -656,7 +656,7 @@ function setupChatBot() {
         about: {
             text: `ℹ️ <strong>About This Portfolio</strong><br><br>
                 This interactive chat portfolio is built with:<br>
-                🎨 Custom WhatsApp-inspired UI<br>
+                🎨 Custom WhatsApp inspired UI<br>
                 🚀 Smooth animations & interactions<br><br>
                 Designed and developed by <strong>Somnath</strong> with ❤️`,
             delay: 2000
