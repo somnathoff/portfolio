@@ -1,7 +1,3 @@
-// ===== REMOVED TYPING ANIMATION - Static text now =====
-// The typing animation code has been removed
-// Update your HTML to show: <p>I'm <span class="typedText">SOMNATH</span></p>
-
 // ===== MOUSE CURSOR EMOJI =====
 document.addEventListener('mousemove', (e) => {
     const cursor = document.getElementById('cursor-emoji');
@@ -327,7 +323,7 @@ function setupCertificationsSlider() {
     
     let currentSlide = 0;
     let autoSlideInterval;
-    const autoSlideDelay = 9000; // Changed from 5000ms (5 seconds) to 8000ms (8 seconds)
+    const autoSlideDelay = 9000;
     
     function goToSlide(index) {
         currentSlide = index;
@@ -450,8 +446,6 @@ function setupScrollReveal() {
         
         sr.reveal('.certifications-slider', { delay: 100 });
         
-        sr.reveal('.cards_item', { interval: 200, origin: 'bottom' });
-        
         sr.reveal('.contact-info', { delay: 100 });
         sr.reveal('.form-control', { delay: 300 });
     }
@@ -459,9 +453,8 @@ function setupScrollReveal() {
 
 // ===== FORM SUBMISSION HANDLER =====
 function setupContactForm() {
-    const contactForm = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const resultDiv = document.getElementById('result');
+    const contactForm = document.querySelector('.form-control');
+    const submitBtn = document.querySelector('.form-button .btn');
     
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -475,12 +468,6 @@ function setupContactForm() {
             const formData = new FormData(this);
             
             setTimeout(() => {
-                if (resultDiv) {
-                    resultDiv.textContent = 'Message sent successfully!';
-                    resultDiv.className = 'form-result success';
-                    resultDiv.style.display = 'block';
-                }
-                
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Send Message <i class="uil uil-message"></i>';
@@ -488,11 +475,7 @@ function setupContactForm() {
                 
                 contactForm.reset();
                 
-                setTimeout(() => {
-                    if (resultDiv) {
-                        resultDiv.style.display = 'none';
-                    }
-                }, 5000);
+                alert('Message sent successfully!');
             }, 2000);
         });
     }
@@ -556,11 +539,335 @@ function setupIntersectionObserver() {
         });
     }, observerOptions);
 
-    const animateElements = document.querySelectorAll('.featured-text, .about-info, .skills-card, .timeline-item, .cards_item');
+    const animateElements = document.querySelectorAll('.featured-text, .about-info, .skills-card, .timeline-item, .certification-card');
     
     animateElements.forEach(el => {
         observer.observe(el);
     });
+}
+
+// ===== CHAT BOT FUNCTIONALITY =====
+function setupChatBot() {
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const chatBody = document.getElementById('chatBody');
+    const chatStatus = document.getElementById('chatStatus');
+
+    if (!chatMessages || !chatInput || !sendBtn) return;
+
+    // Create audio element for message sound
+    const messageSound = new Audio('images/sent.mp3');
+    messageSound.preload = 'auto';
+    
+    // Chat responses database
+    const responses = {
+        intro: {
+            text: `Hello there! 👋<br><br>I'm <strong>Somnath</strong>, a Computer Science Engineering student passionate about technology and innovation.<br><br>I love building solutions that solve real-world problems!<br><br>Type <strong>'help'</strong> to see what you can ask me about.`,
+            delay: 1500
+        },
+        help: {
+            text: `Here's what you can ask me:<br><br>
+                📚 <strong>'education'</strong> - My educational background<br>
+                💻 <strong>'skills'</strong> - My technical skills<br>
+                🚀 <strong>'projects'</strong> - My recent projects<br>
+                🏆 <strong>'certifications'</strong> - My achievements<br>
+                📧 <strong>'contact'</strong> - Ways to reach me<br>
+                📄 <strong>'resume'</strong> - Download my resume<br>
+                ℹ️ <strong>'about'</strong> - About this portfolio<br>
+                🗑️ <strong>'clear'</strong> - Clear chat history`,
+            delay: 1500
+        },
+        education: {
+            text: `🎓 <strong>My Education</strong><br><br>
+                <strong>Bachelor of Engineering - Computer Science</strong><br>
+                Mahendra Institute of Technology (2023 - 2027)<br><br>
+                <strong>School Education</strong><br>
+                Kendriya Vidyalaya Sangathan (2011 - 2023)<br><br>
+                My journey has been about learning, growing, and turning ideas into reality! 🌟`,
+            delay: 2000
+        },
+        skills: {
+            text: `💻 <strong>My Skills</strong><br><br>
+                <strong>Web Development:</strong> HTML, CSS, JavaScript, Bootstrap, Django<br>
+                <strong>Programming:</strong> Python, Java<br>
+                <strong>Data Science:</strong> NumPy, Pandas, Matplotlib, Seaborn<br>
+                <strong>Machine Learning:</strong> Scikit-learn, PyTorch, TensorFlow<br>
+                <strong>Databases:</strong> MySQL, PostgreSQL, MongoDB<br>
+                <strong>Tools:</strong> Git, Docker, Figma<br><br>
+                I'm always learning and exploring new technologies! 🚀`,
+            delay: 2000
+        },
+        projects: {
+            text: `🚀 <strong>Featured Projects</strong><br><br>Check out some of my work:`,
+            delay: 1500,
+            extra: [
+                {
+                    type: 'project',
+                    title: 'AI-Powered Web App',
+                    description: 'Built a full-stack web application with machine learning integration',
+                    tags: ['Python', 'Django', 'TensorFlow', 'PostgreSQL']
+                },
+                {
+                    type: 'project',
+                    title: 'Data Analytics Dashboard',
+                    description: 'Interactive dashboard for visualizing complex datasets',
+                    tags: ['JavaScript', 'D3.js', 'MongoDB', 'React']
+                },
+                {
+                    type: 'project',
+                    title: 'Mobile Application',
+                    description: 'Cross-platform mobile app with real-time features',
+                    tags: ['React Native', 'Firebase', 'Node.js']
+                }
+            ]
+        },
+        certifications: {
+            text: `🏆 <strong>My Certifications</strong><br><br>
+                ✅ Innovation Council Ambassador<br>
+                ✅ ISTE 23rd Conference Participant<br>
+                ✅ ASTHRA 2K24 Winner<br>
+                ✅ State Level Coding Hackathon<br>
+                ✅ ICAMT 2024 Participant<br>
+                ✅ Expert UI/UX Designer<br>
+                ✅ Java Internship Certificate<br><br>
+                View all certifications in the certifications section! 📜`,
+            delay: 2000
+        },
+        contact: {
+            text: `📧 <strong>Let's Connect!</strong><br><br>Feel free to reach out:`,
+            delay: 1500,
+            extra: [
+                {
+                    type: 'contact',
+                    items: [
+                        { icon: 'uil-envelope', text: 'somnathpoff@gmail.com', link: 'mailto:somnathpoff@gmail.com' },
+                        { icon: 'uil-linkedin', text: 'LinkedIn Profile', link: 'https://www.linkedin.com/in/somnath-p-2630092a1' },
+                        { icon: 'uil-github', text: 'GitHub: SOMU3103', link: 'https://github.com/SOMU3103' },
+                        { icon: 'uil-instagram', text: 'Instagram: s.o.m.u3103', link: 'https://www.instagram.com/s.o.m.u3103' }
+                    ]
+                }
+            ]
+        },
+        resume: {
+            text: `📄 <strong>My Resume</strong><br><br>Click the link below to download my resume:<br><br><a href="resume/SOMNATH.docx" download>📥 Download Resume</a><br><br>Or visit the About section for more details!`,
+            delay: 1500
+        },
+        about: {
+            text: `ℹ️ <strong>About This Portfolio</strong><br><br>
+                This interactive chat portfolio is built with:<br>
+                ✨ HTML, CSS, JavaScript<br>
+                🎨 Custom WhatsApp-inspired UI<br>
+                🚀 Smooth animations & interactions<br><br>
+                Designed and developed by <strong>Somnath</strong> with ❤️`,
+            delay: 2000
+        },
+        default: {
+            text: `I didn't quite catch that! 😅<br><br>Try typing <strong>'help'</strong> to see what I can help you with.`,
+            delay: 1500
+        }
+    };
+
+    // Initialize chat with intro message
+    setTimeout(() => {
+        addBotMessage(responses.intro.text);
+    }, 1000);
+
+    // Send message function
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        // Add user message
+        addUserMessage(message);
+        chatInput.value = '';
+
+        // Play message sound
+        playMessageSound();
+
+        // Show typing indicator
+        showTyping();
+
+        // Get response
+        const key = message.toLowerCase().trim();
+        const response = responses[key] || responses.default;
+
+        setTimeout(() => {
+            hideTyping();
+            addBotMessage(response.text);
+
+            // Play message sound for bot response
+            playMessageSound();
+
+            // Add extra content if available
+            if (response.extra) {
+                setTimeout(() => {
+                    response.extra.forEach((item, index) => {
+                        setTimeout(() => {
+                            if (item.type === 'project') {
+                                addProjectCard(item);
+                            } else if (item.type === 'contact') {
+                                addContactList(item.items);
+                            }
+                            // Play sound for each extra message
+                            playMessageSound();
+                        }, index * 300);
+                    });
+                }, 500);
+            }
+
+            // Handle clear command
+            if (key === 'clear') {
+                setTimeout(() => {
+                    clearChat();
+                }, 500);
+            }
+        }, response.delay);
+    }
+
+    // Play message sound
+    function playMessageSound() {
+        try {
+            messageSound.currentTime = 0;
+            messageSound.play().catch(e => {
+                console.log('Audio play failed:', e);
+            });
+        } catch (error) {
+            console.log('Sound error:', error);
+        }
+    }
+
+    // Add user message
+    function addUserMessage(text) {
+        const li = document.createElement('li');
+        li.className = 'chat-message sent';
+        li.innerHTML = `
+            <div class="message-bubble sent">
+                <div class="message-text">${text}</div>
+                <div class="message-time">${getCurrentTime()}</div>
+            </div>
+        `;
+        chatMessages.appendChild(li);
+        scrollToBottom();
+    }
+
+    // Add bot message
+    function addBotMessage(text) {
+        const li = document.createElement('li');
+        li.className = 'chat-message received';
+        li.innerHTML = `
+            <div class="message-bubble received">
+                <div class="message-text">${text}</div>
+                <div class="message-time">${getCurrentTime()}</div>
+            </div>
+        `;
+        chatMessages.appendChild(li);
+        scrollToBottom();
+    }
+
+    // Add project card
+    function addProjectCard(project) {
+        const li = document.createElement('li');
+        li.className = 'chat-message received';
+        const tagsHTML = project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('');
+        li.innerHTML = `
+            <div class="message-bubble received">
+                <div class="project-card">
+                    <h4>${project.title}</h4>
+                    <p>${project.description}</p>
+                    <div class="project-tags">${tagsHTML}</div>
+                </div>
+                <div class="message-time">${getCurrentTime()}</div>
+            </div>
+        `;
+        chatMessages.appendChild(li);
+        scrollToBottom();
+    }
+
+    // Add contact list
+    function addContactList(items) {
+        const li = document.createElement('li');
+        li.className = 'chat-message received';
+        const contactHTML = items.map(item => `
+            <div class="contact-item">
+                <i class="uil ${item.icon}"></i>
+                <a href="${item.link}" target="_blank">${item.text}</a>
+            </div>
+        `).join('');
+        li.innerHTML = `
+            <div class="message-bubble received">
+                <div class="contact-list">${contactHTML}</div>
+                <div class="message-time">${getCurrentTime()}</div>
+            </div>
+        `;
+        chatMessages.appendChild(li);
+        scrollToBottom();
+    }
+
+    // Show typing indicator
+    function showTyping() {
+        chatStatus.textContent = 'typing...';
+        const li = document.createElement('li');
+        li.className = 'chat-message received';
+        li.id = 'typingIndicator';
+        li.innerHTML = `
+            <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        `;
+        chatMessages.appendChild(li);
+        scrollToBottom();
+    }
+
+    // Hide typing indicator
+    function hideTyping() {
+        chatStatus.textContent = 'online';
+        const indicator = document.getElementById('typingIndicator');
+        if (indicator) {
+            indicator.remove();
+        }
+    }
+
+    // Clear chat
+    function clearChat() {
+        chatMessages.innerHTML = '';
+        setTimeout(() => {
+            addBotMessage(responses.intro.text);
+        }, 500);
+    }
+
+    // Get current time
+    function getCurrentTime() {
+        const now = new Date();
+        return now.getHours().toString().padStart(2, '0') + ':' + 
+               now.getMinutes().toString().padStart(2, '0');
+    }
+
+    // Scroll to bottom
+    function scrollToBottom() {
+        setTimeout(() => {
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }, 100);
+    }
+
+    // Event listeners
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Profile picture click effect
+    const chatDP = document.getElementById('chatDP');
+    if (chatDP) {
+        chatDP.addEventListener('click', () => {
+            addBotMessage(`👋 That's me! Feel free to ask anything about my work and experience.`);
+            playMessageSound();
+        });
+    }
 }
 
 // ===== INITIALIZE ALL FUNCTIONALITIES =====
@@ -574,6 +881,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupStickyNavigation();
     setupIntersectionObserver();
+    setupChatBot();
     
     console.log('Portfolio JavaScript loaded successfully!');
 });
