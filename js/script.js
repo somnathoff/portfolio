@@ -599,28 +599,8 @@ function setupChatBot() {
             delay: 2000
         },
         projects: {
-            text: `🚀 <strong>Featured Projects</strong><br><br>Check out some of my work:`,
-            delay: 1500,
-            extra: [
-                {
-                    type: 'project',
-                    title: 'AI-Powered Web App',
-                    description: 'Built a full stack web application with machine learning integration',
-                    tags: ['Python', 'Django', 'TensorFlow', 'PostgreSQL']
-                },
-                {
-                    type: 'project',
-                    title: 'Data Analytics Dashboard',
-                    description: 'Interactive dashboard for visualizing complex datasets',
-                    tags: ['JavaScript', 'D3.js', 'MongoDB', 'React']
-                },
-                {
-                    type: 'project',
-                    title: 'Mobile Application',
-                    description: 'Cross platform mobile app with real time features',
-                    tags: ['React Native', 'Firebase', 'Node.js']
-                }
-            ]
+            text: `🚀 <strong>Featured Projects</strong><br><br>Check out my projects page to see all my work!<br><br><a href="project.html" style="display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #00d4ff, #7c3aed); color: white; text-decoration: none; border-radius: 25px; margin-top: 10px; font-weight: 600;">View Projects <i class="uil uil-arrow-right"></i></a>`,
+            delay: 1500
         },
         certifications: {
             text: `🏆 <strong>My Certifications</strong><br><br>
