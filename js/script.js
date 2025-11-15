@@ -457,7 +457,7 @@ function setupContactForm() {
     const submitBtn = document.querySelector('.form-button .btn');
     
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             if (submitBtn) {
@@ -467,16 +467,33 @@ function setupContactForm() {
             
             const formData = new FormData(this);
             
-            setTimeout(() => {
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Success - redirect to your redirect page
+                    window.location.href = 'https://somnathoff.github.io/redirect/';
+                } else {
+                    // Error handling
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'Send Message <i class="uil uil-message"></i>';
+                    }
+                    alert('Something went wrong. Please try again.');
+                }
+            } catch (error) {
+                // Network error handling
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Send Message <i class="uil uil-message"></i>';
                 }
-                
-                contactForm.reset();
-                
-                alert('Message sent successfully!');
-            }, 2000);
+                alert('Network error. Please check your connection and try again.');
+            }
         });
     }
 }
